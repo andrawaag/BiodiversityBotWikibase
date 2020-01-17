@@ -38,7 +38,6 @@ taxon_ids = dict()
 for index, row in taxondf.iterrows():
     wikibase_search = wdi_core.WDItemEngine.get_wd_search_results(search_string=row["scientific_name"], mediawiki_api_url = mediawiki_api_url)
     for wbid in wikibase_search:
-        print(wbid)
         if wbid in todo:
             data = []
             if wdi_core.WDItemEngine(wd_item_id=wbid, mediawiki_api_url=mediawiki_api_url).get_label(lang="en") == row["scientific_name"]:
@@ -47,8 +46,8 @@ for index, row in taxondf.iterrows():
                 data.append(wdi_core.WDExternalID(str(row["taxon_id"]), prop_nr="P10"))
                 item = wdi_core.WDItemEngine(wd_item_id=wbid, data=data, mediawiki_api_url=mediawiki_api_url)
                 item.write(login=login)
-            else:
-                print(wbid+"already covered")
+        else:
+            print(wbid+"already covered")
 
 
 
