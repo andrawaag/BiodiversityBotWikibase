@@ -47,6 +47,8 @@ for index, row in taxondf.iterrows():
                 data.append(wdi_core.WDExternalID(str(row["taxon_id"]), prop_nr="P10"))
                 item = wdi_core.WDItemEngine(wd_item_id=wbid, data=data, mediawiki_api_url=mediawiki_api_url)
                 item.write(login=login)
+            else:
+                print(wbid+"already covered")
 
 
 
