@@ -41,7 +41,7 @@ for index, row in taxondf.iterrows():
         if wbid in todo:
             data = []
             if wdi_core.WDItemEngine(wd_item_id=wbid, mediawiki_api_url=mediawiki_api_url).get_label(lang="en") == row["scientific_name"]:
-                print(wbid, row["scientific_name"])
+                print(wbid, row["scientific_name"].encode('utf-8'))
                 data.append(wdi_core.WDItemID("Q131918", prop_nr="P13"))
                 data.append(wdi_core.WDExternalID(str(row["taxon_id"]), prop_nr="P10"))
                 item = wdi_core.WDItemEngine(wd_item_id=wbid, data=data, mediawiki_api_url=mediawiki_api_url)
