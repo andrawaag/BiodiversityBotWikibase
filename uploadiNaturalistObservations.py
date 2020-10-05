@@ -69,7 +69,10 @@ for observation in observations.keys():
                           prop_nr="P5"))
     data.append(wdi_core.WDUrl(observations[observation]["url"], prop_nr="P6"))
     for image_url in observations[observation]["image_url"]:
-        data.append(wdi_core.WDUrl(image_url.split("?")[0].replace("medium", "original"), prop_nr="P7"))
+        try:
+            data.append(wdi_core.WDUrl(image_url.split("?")[0].replace("medium", "original"), prop_nr="P7"))
+        except:
+            pass
     data.append(wdi_core.WDGlobeCoordinate(latitude=observations[observation]["latitude"],
                                            longitude=observations[observation]["longitude"],
                                            precision=0.016666666666667, prop_nr="P8"))
