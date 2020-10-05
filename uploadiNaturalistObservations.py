@@ -88,6 +88,9 @@ for observation in observations.keys():
     obslabel_search = wdi_core.WDItemEngine.get_wd_search_results(
         search_string="iNaturalist observation " + observation, mediawiki_api_url=mediawiki_api_url)
     if len(obslabel_search) == 0:
-        print(item.write(login))
+        try:
+            print(item.write(login))
+        except:
+            pass
     else:
         print(obslabel_search[0])
