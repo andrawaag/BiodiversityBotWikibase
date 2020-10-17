@@ -55,42 +55,45 @@ for row in df.itertuples():
 
 wikibaseEntityEngine = wdi_core.WDItemEngine.wikibase_item_engine_factory(mediawiki_api_url, sparql_endpoint_url)
 for observation in observations.keys():
-    data = []
-    data.append(wdi_core.WDString(value=observation, prop_nr="P1"))
-    print("+" + str(observations[observation]["observed_on"]) + "T00:00:00Z")
+    try:
+        data = []
+        data.append(wdi_core.WDString(value=observation, prop_nr="P1"))
+        print("+" + str(observations[observation]["observed_on"]) + "T00:00:00Z")
 
-    data.append(wdi_core.WDTime("+" + str(observations[observation]["observed_on"]) + "T00:00:00Z", prop_nr="P2"))
-    data.append(
-        wdi_core.WDUrl("https://www.inaturalist.org/people/" + observations[observation]["user_login"], prop_nr="P3"))
-    data.append(wdi_core.WDItemID(value=get_or_createItem(label=observations[observation]["quality_grade"]),
-                                  prop_nr="P4"))  # P4)
-    data.append(
-        wdi_core.WDItemID(value=get_or_createItem(label=observations[observation]["license"], description="License"),
-                          prop_nr="P5"))
-    data.append(wdi_core.WDUrl(observations[observation]["url"], prop_nr="P6"))
-    for image_url in observations[observation]["image_url"]:
-        try:
-            data.append(wdi_core.WDUrl(image_url.split("?")[0].replace("medium", "original"), prop_nr="P7"))
-        except:
-            pass
-    data.append(wdi_core.WDGlobeCoordinate(latitude=observations[observation]["latitude"],
-                                           longitude=observations[observation]["longitude"],
-                                           precision=0.016666666666667, prop_nr="P8"))
-    data.append(wdi_core.WDItemID(
-        value=get_or_createItem(observations[observation]["scientific_name"], description="Scientific taxon name"),
-        prop_nr="P9"))
-    # data.append(wdiobservations[observation]["taxon_id"], prop_nr="P10")
+        data.append(wdi_core.WDTime("+" + str(observations[observation]["observed_on"]) + "T00:00:00Z", prop_nr="P2"))
+        data.append(
+            wdi_core.WDUrl("https://www.inaturalist.org/people/" + observations[observation]["user_login"], prop_nr="P3"))
+        data.append(wdi_core.WDItemID(value=get_or_createItem(label=observations[observation]["quality_grade"]),
+                                      prop_nr="P4"))  # P4)
+        data.append(
+            wdi_core.WDItemID(value=get_or_createItem(label=observations[observation]["license"], description="License"),
+                              prop_nr="P5"))
+        data.append(wdi_core.WDUrl(observations[observation]["url"], prop_nr="P6"))
+        for image_url in observations[observation]["image_url"]:
+            try:
+                data.append(wdi_core.WDUrl(image_url.split("?")[0].replace("medium", "original"), prop_nr="P7"))
+            except:
+                pass
+        data.append(wdi_core.WDGlobeCoordinate(latitude=observations[observation]["latitude"],
+                                               longitude=observations[observation]["longitude"],
+                                               precision=0.016666666666667, prop_nr="P8"))
+        data.append(wdi_core.WDItemID(
+            value=get_or_createItem(observations[observation]["scientific_name"], description="Scientific taxon name"),
+            prop_nr="P9"))
+        # data.append(wdiobservations[observation]["taxon_id"], prop_nr="P10")
 
-    item = wikibaseEntityEngine(data=data)
-    item.set_label("iNaturalist observation " + observation, lang="en")
-    item.set_description("Observation of " + observations[observation]["scientific_name"], lang="en")
-    # pprint.pprint(item.get_wd_json_representation())
-    obslabel_search = wdi_core.WDItemEngine.get_wd_search_results(
-        search_string="iNaturalist observation " + observation, mediawiki_api_url=mediawiki_api_url)
-    if len(obslabel_search) == 0:
-        try:
-            print(item.write(login))
-        except:
-            pass
-    else:
-        print(obslabel_search[0])
+        item = wikibaseEntityEngine(data=data)
+        item.set_label("iNaturalist observation " + observation, lang="en")
+        item.set_description("Observation of " + observations[observation]["scientific_name"], lang="en")
+        # pprint.pprint(item.get_wd_json_representation())
+        obslabel_search = wdi_core.WDItemEngine.get_wd_search_results(
+            search_string="iNaturalist observation " + observation, mediawiki_api_url=mediawiki_api_url)
+        if len(obslabel_search) == 0:
+            try:
+                print(item.write(login))
+            except:
+                pass
+        else:
+            print(obslabel_search[0])
+    except:
+        continue
