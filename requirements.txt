@@ -29,11 +29,11 @@ Jinja2==2.11.2
 json5==0.9.5
 jsonasobj==1.2.1
 jsonschema==3.2.0
-jupyter-client==6.1.7
-jupyter-core==4.6.3
-jupyterlab==2.2.8
-jupyterlab-pygments==0.1.1
-jupyterlab-server==1.2.0
+jupyter-client
+jupyter-core
+jupyterlab
+jupyterlab-pygments
+jupyterlab-server
 MarkupSafe==1.1.1
 mistune==0.8.4
 mwoauth==0.3.7
