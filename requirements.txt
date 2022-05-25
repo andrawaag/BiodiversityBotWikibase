@@ -57,7 +57,7 @@ ptyprocess==0.6.0
 pycparser==2.20
 Pygments
 PyJSG==0.10.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 pyparsing==2.4.7
 pyrsistent==0.17.3
 PyShEx==0.7.14
