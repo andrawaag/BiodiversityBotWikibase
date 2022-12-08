@@ -6,7 +6,7 @@ attrs==20.2.0
 backcall==0.2.0
 backoff==1.10.0
 bleach
-certifi==2020.6.20
+certifi==2022.12.7
 cffi==1.14.3
 CFGraph==0.2.1
 chardet==3.0.4
